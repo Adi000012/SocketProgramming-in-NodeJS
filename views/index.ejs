@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket Programming</title>
+</head>
+<body>
+    <h3 style="margin-left: 70vh;">Scoket Programming</h3>
+
+    <button onclick="conn()">New Connection</button>
+
+    <input type="text" id="msg" placeholder="Enter a Message">
+    <button type="submit" id="btn">Send</button>
+
+    <div id="chat">
+        <p id="p"> </p>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+    function conn()
+    {
+    const socket = io();
+    const msg = document.getElementById("msg");
+    const btn = document.getElementById("btn");
+    const chat = document.getElementById("chat");
+
+    socket.on("message",(message)=>
+    {
+        const p = message;
+        document.getElementById("p").innerHTML = p ;
+    })
+
+    btn.addEventListener('click', (e)=>
+    {
+        const message = msg.value;
+        console.log(message); 
+        socket.emit("user-Message", message);
+    })
+    }
+    </script>
+
+</body>
+</html>
